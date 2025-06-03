@@ -23,7 +23,7 @@
 </form>
 
 <p>
-	<a href="sign-up.jsp">
+	<a href="user-Add.jsp">
 		<button >新規会員登録</button>
 	</a>
 </p>

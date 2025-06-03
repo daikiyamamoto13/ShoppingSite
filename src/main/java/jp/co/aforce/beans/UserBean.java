@@ -14,10 +14,11 @@ public class UserBean {
 	
 	private String mailAddress;
 	
+	public UserBean() {}
+	
 	public UserBean(String memberId, String password, String lastName, String firstName, String address,
-			String mailAddress) {
-		
-	}
+			String mailAddress) {}
+
 
 	public String getMemberId() {
 		return memberId;

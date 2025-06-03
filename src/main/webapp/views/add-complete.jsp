@@ -4,11 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>新規登録</title>
+<title>登録完了</title>
 </head>
 <body>
 
-<h2>新規登録ページ</h2>
+<h2>ご登録ありがとうございます！</h2>
+
+<p>
+	<a href="login-in.jsp">
+		<button >ログイン画面に戻る</button>
+	</a>
+</p>
+
 
 </body>
 </html>

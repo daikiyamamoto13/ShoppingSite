@@ -12,17 +12,23 @@ import javax.sql.DataSource;
 import jp.co.aforce.beans.UserBean;
 
 public class UserDAO {
-	
-	static DataSource ds ;
-	
+
+	static DataSource ds;
+
 	public Connection getConnection() throws Exception {
-		
-		if (ds==null) {
-			InitialContext ic=new InitialContext();
-			ds=(DataSource)ic.lookup("java:comp/env/jdbc/shoppingsite_yamamoto");
+
+		if (ds == null) {
+			InitialContext ic = new InitialContext();
+			ds = (DataSource) ic.lookup("java:comp/env/jdbc/shoppingsite_yamamoto");
 		}
-		return ds.getConnection();	}
-	
+		return ds.getConnection();
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public List<UserBean> getAllusers() throws Exception {
 		List<UserBean> users = new ArrayList<>();
 		Connection con = getConnection();
@@ -36,8 +42,8 @@ public class UserDAO {
 			String firstName = rs.getString("FIRST_NAME");
 			String address = rs.getString("ADDRESS");
 			String mailAddress = rs.getString("MAIL_ADDRESS");
-			
-			UserBean user = new UserBean(memberId,password,lastName,firstName,address,mailAddress);
+
+			UserBean user = new UserBean(memberId, password, lastName, firstName, address, mailAddress);
 			users.add(user);
 		}
 
@@ -46,28 +52,55 @@ public class UserDAO {
 		return users;
 	}
 
-    public String findUser(String memberId, String password) throws Exception {
+	/**
+	 * 
+	 * @param memberId
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	public String findUser(String memberId, String password) throws Exception {
 
-    	String user = null;
-    	
-         Connection con = getConnection();
-            String sql = "SELECT CONCAT(LAST_NAME, FIRST_NAME) AS full_name FROM users WHERE MEMBER_ID = ? AND PASSWORD = ?";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, memberId);
-            stmt.setString(2, password);
+		String user = null;
 
-            ResultSet rs = stmt.executeQuery();
-            
-            
-            if (rs.next()) {
-                
-            user = rs.getString("full_name");	
-    		
-            }
-        
+		Connection con = getConnection();
+		String sql = "SELECT CONCAT(LAST_NAME, FIRST_NAME) AS full_name FROM users WHERE MEMBER_ID = ? AND PASSWORD = ?";
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		stmt.setString(2, password);
 
-        return user;
-    }
-    
-     
+		ResultSet rs = stmt.executeQuery();
+
+		if (rs.next()) {
+
+			user = rs.getString("full_name");
+
+		}
+
+		return user;
+	}
+	
+	public boolean insertUser(UserBean user) throws Exception {
+		Connection con = getConnection();
+		
+		String sql = "INSERT INTO users(MEMBER_ID,PASSWORD,LAST_NAME,FIRST_NAME,ADDRESS,MAIL_ADDRESS) VALUES (?,?,?,?,?)";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		
+		stmt.setString(1, user.getMemberId());
+		stmt.setString(2, user.getPassword());
+		stmt.setString(3, user.getLastName());
+		stmt.setString(4, user.getFirstName());
+		stmt.setString(5, user.getAddress());
+		stmt.setString(6, user.getMailAddress());
+		
+		int result = stmt.executeUpdate();
+		
+		stmt.close();
+		con.close();
+		
+		return result > 0;
+		
+	}
+
 }
