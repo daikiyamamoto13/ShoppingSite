@@ -137,6 +137,24 @@ public class UserDAO {
 	    }
 	}
 
+	public boolean deleteUser(String memberId) throws Exception {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			con = getConnection();
+			String sql ="DELETE FROM users WHERE MEMBER_ID = ?";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, memberId);
+			int result = stmt.executeUpdate();
+			return result > 0;
+		} finally {	
+			if (stmt != null) stmt.close();
+			if (stmt != null) stmt.close();
+		}
+	}
 	
 
 }

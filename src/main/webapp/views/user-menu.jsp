@@ -23,8 +23,12 @@ UserBean user = (UserBean) session.getAttribute("user");
 
 <!-- ログアウト -->
 <form action="../LogoutServlet" method="post">
-  <input type="submit" value="ログアウト">
+  	<input type="submit" value="ログアウト">
 </form>
+
+<!-- アカウント削除 -->
+<form action="../userDeleteServlet" method="post" onsubmit="retun confirm('本当に退会しますか？')">
+	<button type="submit">退会する</button>
 
 </body>
 </html>

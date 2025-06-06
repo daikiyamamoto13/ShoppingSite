@@ -30,6 +30,6 @@ jp.co.aforce.beans.UserBean editUser = (jp.co.aforce.beans.UserBean) session.get
 		<button type="submit">登録</button>
 	</form>
 	
-	<
+	
 </body>
 </html>
