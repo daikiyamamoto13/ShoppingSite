@@ -1,6 +1,6 @@
 package jp.co.aforce.beans;
 
-public class UserBean {
+public class EditBean {
 	
 	private String memberId;
 	
@@ -12,15 +12,9 @@ public class UserBean {
 	
 	private String address;
 	
-	private String mailAddress;
+	private String mailAddress;	
 	
-	public UserBean() {}
-	
-	public UserBean(String memberId, String password, String lastName, String firstName, String address,
-			String mailAddress) {}
-
-
-	public String getMemberId() {
+		public String getMemberId() {
 		return memberId;
 	}
 
@@ -51,7 +45,6 @@ public class UserBean {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
 
 	public String getAddress() {
 		return address;
@@ -69,6 +62,5 @@ public class UserBean {
 		this.mailAddress = mailAddress;
 	}
 
-	
-
+		
 }

@@ -59,31 +59,39 @@ public class UserDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public String findUser(String memberId, String password) throws Exception {
+	public UserBean findUser(String memberId, String password) throws Exception {
+	    UserBean user = null;
 
-		String user = null;
+	    Connection con = getConnection();
+	    String sql = "SELECT * FROM users WHERE MEMBER_ID = ? AND PASSWORD = ?";
+	    PreparedStatement stmt = con.prepareStatement(sql);
+	    stmt.setString(1, memberId);
+	    stmt.setString(2, password);
 
-		Connection con = getConnection();
-		String sql = "SELECT CONCAT(LAST_NAME, FIRST_NAME) AS full_name FROM users WHERE MEMBER_ID = ? AND PASSWORD = ?";
-		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, memberId);
-		stmt.setString(2, password);
+	    ResultSet rs = stmt.executeQuery();
 
-		ResultSet rs = stmt.executeQuery();
+	    if (rs.next()) {
+	        user = new UserBean();
+	        user.setMemberId(rs.getString("MEMBER_ID"));
+	        user.setPassword(rs.getString("PASSWORD"));
+	        user.setLastName(rs.getString("LAST_NAME"));
+	        user.setFirstName(rs.getString("FIRST_NAME"));
+	        user.setAddress(rs.getString("ADDRESS"));
+	        user.setMailAddress(rs.getString("MAIL_ADDRESS"));
+	    }
 
-		if (rs.next()) {
+	    rs.close();
+	    stmt.close();
+	    con.close();
 
-			user = rs.getString("full_name");
-
-		}
-
-		return user;
+	    return user;
 	}
+
 	
 	public boolean insertUser(UserBean user) throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "INSERT INTO users(MEMBER_ID,PASSWORD,LAST_NAME,FIRST_NAME,ADDRESS,MAIL_ADDRESS) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO users(MEMBER_ID,PASSWORD,LAST_NAME,FIRST_NAME,ADDRESS,MAIL_ADDRESS) VALUES (?,?,?,?,?,?)";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		
@@ -102,5 +110,33 @@ public class UserDAO {
 		return result > 0;
 		
 	}
+	
+	public boolean updateUser(UserBean user) throws Exception {
+	    Connection con = null;
+	    PreparedStatement stmt = null;
+
+	    try {
+	        con = getConnection();
+
+	        String sql = "UPDATE users SET LAST_NAME=?, FIRST_NAME=?, ADDRESS=?, MAIL_ADDRESS=? WHERE MEMBER_ID=?";
+
+	        stmt = con.prepareStatement(sql);
+	        
+	        stmt.setString(1, user.getLastName());
+	        stmt.setString(2, user.getFirstName());
+	        stmt.setString(3, user.getAddress());
+	        stmt.setString(4, user.getMailAddress());
+	        stmt.setString(5, user.getMemberId());
+
+	        int result = stmt.executeUpdate();
+	        return result > 0;
+
+	    } finally {
+	        if (stmt != null) stmt.close();
+	        if (con != null) con.close();
+	    }
+	}
+
+	
 
 }

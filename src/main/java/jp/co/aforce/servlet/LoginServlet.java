@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import jp.co.aforce.beans.UserBean;
 import jp.co.aforce.dao.UserDAO;
 
 /**
@@ -28,7 +29,8 @@ public class LoginServlet extends HttpServlet {
 		UserDAO dao = new UserDAO();
 		
 		try {
-			String user = dao.findUser(memberId,password);
+			
+			UserBean user = dao.findUser(memberId,password);
 		
 		
 		

@@ -22,7 +22,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		session.removeAttribute("user");
 		
-		response.sendRedirect("views/login-in.jsp");
+		response.sendRedirect("views/logOut.jsp");
 	}
 
 }
