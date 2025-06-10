@@ -14,10 +14,17 @@ public class UserBean {
 	
 	private String mailAddress;
 	
-	public UserBean() {}
-	
-	public UserBean(String memberId, String password, String lastName, String firstName, String address,
-			String mailAddress) {}
+        public UserBean() {}
+
+        public UserBean(String memberId, String password, String lastName, String firstName, String address,
+                        String mailAddress) {
+                this.memberId = memberId;
+                this.password = password;
+                this.lastName = lastName;
+                this.firstName = firstName;
+                this.address = address;
+                this.mailAddress = mailAddress;
+        }
 
 
 	public String getMemberId() {
