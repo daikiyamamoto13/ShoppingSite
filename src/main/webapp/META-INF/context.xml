@@ -8,8 +8,8 @@
 		auth="Container"
 		type="javax.sql.DataSource"
 		driverClassName="com.mysql.cj.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/shoppingsite_yamamoto"
-		username="root"
-		password="Mm.Daykey1310"
-	/>
+                url="jdbc:mysql://localhost:3306/shoppingsite_yamamoto"
+                username="${env.DB_USER}"
+                password="${env.DB_PASSWORD}"
+        />
 </Context>
