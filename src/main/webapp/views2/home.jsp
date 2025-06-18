@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="jp.co.aforce.beans.ProductBean" %>
-<%@ page import="jp.co.aforce.dao.ProductDAO" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 
 
 
@@ -21,14 +19,14 @@
 
   <!-- ヘッダー -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>ショップロゴ</h2>
+    <h2><a href="../ProductListServlet" class="text-decoration-none text-reset">ショップロゴ</a></h2>
     <div class="d-flex flex-wrap gap-2">
-      <a href="home.jsp?category=100" class="btn btn-outline-primary">アート</a>
-      <a href="home.jsp?category=200" class="btn btn-outline-primary">フィギュア</a>
-      <a href="home.jsp?category=300" class="btn btn-outline-primary">トレーディングカード</a>
-      <a href="home.jsp?category=400" class="btn btn-outline-primary">ホビー</a>
-      <a href="home.jsp?category=500" class="btn btn-outline-primary">スニーカー</a>
-      <a href="home.jsp?category=600" class="btn btn-outline-primary">電子機器</a>
+      <a href="../ProductListServlet?category=100" class="btn btn-outline-primary">アート</a>
+      <a href="../ProductListServlet?category=200" class="btn btn-outline-primary">フィギュア</a>
+      <a href="../ProductListServlet?category=300" class="btn btn-outline-primary">トレーディングカード</a>
+      <a href="../ProductListServlet?category=400" class="btn btn-outline-primary">ホビー</a>
+      <a href="../ProductListServlet?category=500" class="btn btn-outline-primary">スニーカー</a>
+      <a href="../ProductListServlet?category=600" class="btn btn-outline-primary">電子機器</a>
     </div>
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="検索">

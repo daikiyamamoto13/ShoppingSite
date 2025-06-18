@@ -75,6 +75,35 @@ public class ProductDAO {
         return itemList;
     }
 
+    // 指定されたカテゴリーの商品情報のみを取得
+    public List<ProductBean> findByCategory(int categoryId) throws Exception {
+        List<ProductBean> itemList = new ArrayList<>();
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "SELECT product_id, name, price, image_path FROM items WHERE category_id = ? ORDER BY created_at DESC")) {
+
+            ps.setInt(1, categoryId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ProductBean item = new ProductBean();
+                    item.setProduct_id(rs.getInt("product_id"));
+                    item.setName(rs.getString("name"));
+                    item.setPrice(rs.getInt("price"));
+                    item.setImage_path(rs.getString("image_path"));
+                    itemList.add(item);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // エラーが起きた場合は空のリストを返す
+        }
+
+        return itemList;
+    }
+
 }
 
 
