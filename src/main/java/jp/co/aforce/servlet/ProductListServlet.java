@@ -26,12 +26,20 @@ public class ProductListServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 try {
-	            ProductDAO dao = new ProductDAO();
-	            List<ProductBean> itemList = dao.findAll();
+                 try {
+                    ProductDAO dao = new ProductDAO();
 
-	            request.setAttribute("itemList", itemList);
-	            request.getRequestDispatcher("/home.jsp").forward(request, response);
+                    String categoryParam = request.getParameter("category");
+                    List<ProductBean> itemList;
+                    if (categoryParam == null || categoryParam.isEmpty()) {
+                        itemList = dao.findAll();
+                    } else {
+                        int categoryId = Integer.parseInt(categoryParam);
+                        itemList = dao.findByCategory(categoryId);
+                    }
+
+                    request.setAttribute("itemList", itemList);
+                    request.getRequestDispatcher("/views2/home.jsp").forward(request, response);
 
 	        } catch (Exception e) {
 	            e.printStackTrace();
