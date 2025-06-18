@@ -34,8 +34,8 @@ public class ProductListServlet extends HttpServlet {
                     if (categoryParam == null || categoryParam.isEmpty()) {
                         itemList = dao.findAll();
                     } else {
-                        int categoryId = Integer.parseInt(categoryParam);
-                        itemList = dao.findByCategory(categoryId);
+                        int category_id = Integer.parseInt(categoryParam);
+                        itemList = dao.findByCategory(category_id);
                     }
 
                     request.setAttribute("itemList", itemList);

@@ -2,6 +2,9 @@
 <%@ page import="jp.co.aforce.beans.ProductBean" %>
 <%@ page import="java.util.List" %>
 
+<%
+  List<ProductBean> itemList = (List<ProductBean>) request.getAttribute("itemList");
+%>
 
 
 <!DOCTYPE html>
