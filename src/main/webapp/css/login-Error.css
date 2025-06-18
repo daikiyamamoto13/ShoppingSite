@@ -1,0 +1,51 @@
+@charset "UTF-8";body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: linear-gradient(to right, #f2dede, #e2e2e2); /* 警告風 */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.error-card {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  width: 320px;
+  text-align: center;
+}
+
+.error-card h2 {
+  color: #c9302c;
+  margin-bottom: 16px;
+}
+
+.error-card p {
+  margin-bottom: 24px;
+  font-size: 16px;
+  color: #333;
+}
+
+.error-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.error-btn:hover {
+  background-color: #0056b3;
+}

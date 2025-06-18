@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/logOut.css">
+
 <title>ログアウト</title>
 </head>
 <body>
+
+<div class="logout-wrapper">
 
 <h2>ログアウトしました</h2>
 

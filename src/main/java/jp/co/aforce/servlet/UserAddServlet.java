@@ -30,13 +30,14 @@ public class UserAddServlet extends HttpServlet {
 		    boolean success = dao.insertUser(user);
 
 		    if (success) {
-		        response.sendRedirect("add-complete.jsp");
-		    } else {
-		        response.sendRedirect("user-Added.jsp"); // 登録済み
+		        response.sendRedirect("add-Complete.jsp");
 		    }
+		    
+		//既に登録されている情報なら
+		    
 		} catch (Exception e) {
 		    e.printStackTrace();
-		    response.sendRedirect("login-error.jsp");
+		    response.sendRedirect("user-Added.jsp");
 		}
 
 

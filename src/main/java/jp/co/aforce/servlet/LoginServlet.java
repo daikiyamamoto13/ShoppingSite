@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 		
 			response.sendRedirect("views/user-menu.jsp");
 		} else {
-			response.sendRedirect("views/login-error.jsp");
+			response.sendRedirect("views/login-Error.jsp");
 		}
 		} catch (Exception e) {
 			e.printStackTrace();

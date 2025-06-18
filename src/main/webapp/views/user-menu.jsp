@@ -9,26 +9,38 @@ UserBean user = (UserBean) session.getAttribute("user");
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login-success.css">
+
+
 <title>ログイン完了</title>
 </head>
 <body>
 
-<h2>ようこそ、<%= user.getFirstName() + user.getLastName() %> さん！</h2>
-<p>ログインに成功しました。</p>
+	<div class="login-success-wrapper">
+		<div class="login-success-card">
 
-<!-- 編集フォーム画面へ遷移 -->
-<form action="userEdit.jsp" method="post">
-	<input type="submit" value="情報の変更">
-</form>
+			<h2>
+				ようこそ、<%=user.getFirstName() + user.getLastName()%>
+				さん！
+			</h2>
+			<p>ログインに成功しました。</p>
 
-<!-- ログアウト -->
-<form action="../LogoutServlet" method="post">
-  	<input type="submit" value="ログアウト">
-</form>
+			<!-- 編集フォーム画面へ遷移 -->
+			<form action="userEdit.jsp" method="post">
+				<input type="submit" class="login-btn edit-btn" value="会員情報変更">
+			</form>
 
-<!-- アカウント削除 -->
-<form action="../userDeleteServlet" method="post" onsubmit="retun confirm('本当に退会しますか？')">
-	<button type="submit">退会する</button>
+			<!-- ログアウト -->
+			<form action="../LogoutServlet" method="post">
+				<input type="submit" class="login-btn logout-btn" value="ログアウト">
+			</form>
 
+			<!-- アカウント削除 -->
+			<form action="../userDeleteServlet" method="post"
+				onsubmit="retun confirm('本当に退会しますか？')">
+				<button type="submit" class="login-btn delete-btn">退会する</button>
+		</div>
+	</div>
 </body>
 </html>
