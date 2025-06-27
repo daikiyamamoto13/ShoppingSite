@@ -10,7 +10,8 @@
 <body>
 	<div class="login-wrapper">
 		<div class="login-card">
-			<h2>ログイン</h2>
+			<h2>ログイン後に使える機能です<br>ログインしてください</h2>
+			
 			<form action="../LoginServlet" method="post">
 				<label for="id">ID：</label> <input type="text" id="id" name="memberId">
 
@@ -22,9 +23,6 @@
 
 				<div class="register-link">
 					<a href="user-Add.jsp">新規会員登録はこちら</a>
-					<p>
-				<a href="<%=request.getContextPath()%>/ProductListServlet">ホーム画面に戻る</a>
-			</p>
 				</div>
 			</form>
 		</div>

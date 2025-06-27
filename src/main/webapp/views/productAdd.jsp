@@ -10,11 +10,15 @@
 	rel="stylesheet">
 </head>
 <body class="vh-100 d-flex justify-content-center align-items-center">
-
+	
+	
+	
 	<div class="container" style="max-width: 600px;">
 		<h2 class="text-center border-bottom pb-2 mb-4 fw-bold">商品を出品する</h2>
-		<form action="ProductAddServlet" method="post"
+		
+		<form action="<%= request.getContextPath() %>/ProductAddServlet" method="post"
 			enctype="multipart/form-data">
+			
 			<div class="mb-3">
 				<label for="title" class="form-label">商品名：</label> <input
 					type="text" class="form-control" id="name" name="name" required>
@@ -26,7 +30,7 @@
 			</div>
 			<div class="mb-3">
 				<label for="condition" class="form-label">商品状態：</label> <select
-					class="form-select" id="condition_id" name="condition_id" required>
+					class="form-select" id="conditionId" name="conditionId" required>
 					<option value="">選択してください</option>
 					<option value="1">新品</option>
 					<option value="2">未使用に近い</option>
@@ -39,7 +43,7 @@
 
 			<div class="mb-3">
 				<label for="category" class="form-label">カテゴリー：</label> <select
-					class="form-select" id="category_id" name="category_id" required>
+					class="form-select" id="categoryId" name="categoryId" required>
 					<option value="">選択してください</option>
 					<option value="100">アート</option>
 					<option value="200">フィギュア</option>
@@ -56,7 +60,7 @@
 			</div>
 			<div class="mb-3">
 				<label for="image" class="form-label">商品画像：</label> <input type="file"
-					class="form-control" id="image_path" name="image_path">
+					class="form-control" id="imagePath" name="imagePath" required>
 			</div>
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">出品</button>

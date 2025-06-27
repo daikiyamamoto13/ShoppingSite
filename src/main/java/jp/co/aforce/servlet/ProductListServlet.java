@@ -12,9 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jp.co.aforce.beans.ProductBean;
 import jp.co.aforce.dao.ProductDAO;
 
-/**
- * Servlet implementation class ProductListServlet
- */
 @WebServlet("/ProductListServlet")
 public class ProductListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,32 +19,73 @@ public class ProductListServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
-	    doPost(request, response); // GETでもPOSTと同じ処理をする
-	}
+	    try {
+	        ProductDAO dao = new ProductDAO();
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-                 try {
-                    ProductDAO dao = new ProductDAO();
+	        // パラメータの取得
+	        String query = request.getParameter("query");
+	        String categoryParam = request.getParameter("categoryId");
+	        String sortParam = request.getParameter("sort");
+	        String availableOnlyParam = request.getParameter("availableOnly");
+	        boolean availableOnly = "true".equals(availableOnlyParam);
 
-                    String categoryParam = request.getParameter("category");
-                    List<ProductBean> itemList;
-                    if (categoryParam == null || categoryParam.isEmpty()) {
-                        itemList = dao.findAll();
-                    } else {
-                        int category_id = Integer.parseInt(categoryParam);
-                        itemList = dao.findByCategory(category_id);
-                    }
 
-                    request.setAttribute("itemList", itemList);
-                    request.getRequestDispatcher("/views2/home.jsp").forward(request, response);
+	        List<ProductBean> newItems;
+	        List<ProductBean> itemList;
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            request.setAttribute("errorMessage", "商品一覧の取得中にエラーが発生しました。");
-	            request.getRequestDispatcher("/error.jsp").forward(request, response);
-	        }
+	        // カテゴリIDの有無で分岐
+	        if ((categoryParam == null || categoryParam.isEmpty()) &&
+	        	    (query == null || query.trim().isEmpty())) {
+
+	        	    // --- 条件なし ---
+	        	    itemList = availableOnly ? dao.findAvailableSorted(sortParam) : dao.findAllSorted(sortParam);
+	        	    newItems = dao.findNewest(10);
+
+	        	} else if (categoryParam == null || categoryParam.isEmpty()) {
+
+	        	    // --- キーワードのみ ---
+	        	    itemList = availableOnly
+	        	        ? dao.searchAvailableByKeywordSorted(query, sortParam)
+	        	        : dao.searchByKeywordSorted(query, sortParam);
+	        	    newItems = dao.findNewest(10);
+
+	        	} else {
+	        	    int categoryId = Integer.parseInt(categoryParam);
+
+	        	    if (query == null || query.trim().isEmpty()) {
+
+	        	        // --- カテゴリのみ ---
+	        	        if (sortParam == null || sortParam.isEmpty()) {
+	        	            itemList = availableOnly
+	        	                ? dao.findAvailableByCategory(categoryId)
+	        	                : dao.findByCategory(categoryId);
+	        	        } else {
+	        	            itemList = availableOnly
+	        	                ? dao.findAvailableByCategorySorted(categoryId, sortParam)
+	        	                : dao.findByCategorySorted(categoryId, sortParam);
+	        	        }
+
+	        	    } else {
+	        	        // --- カテゴリ + キーワード + 並び替え ---
+	        	        itemList = availableOnly
+	        	            ? dao.searchAvailableByCategoryAndKeywordSorted(categoryId, query, sortParam)
+	        	            : dao.searchByCategoryAndKeywordSorted(categoryId, query, sortParam);
+	        	    }
+
+	        	    newItems = dao.findNewestByCategory(categoryId, 10);
+	        	}
+
+	        
+
+	        request.setAttribute("itemList", itemList);
+	        request.setAttribute("newItems", newItems);
+
+	        request.getRequestDispatcher("/views/home.jsp").forward(request, response);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        request.setAttribute("errorMessage", "商品一覧の取得中にエラーが発生しました。");
+	        request.getRequestDispatcher("/views/error.jsp").forward(request, response);
 	    }
-		
 	}
-
-
+}

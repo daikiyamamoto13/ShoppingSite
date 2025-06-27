@@ -1,27 +1,36 @@
 package jp.co.aforce.beans;
 
+import java.sql.Timestamp;
+
 public class ProductBean {
 	
-	private int member_id;
+	private int productId;
+	private String memberId;
     private String name;
     private String description;
     private int price;
-    private int category_id;
-    private int product_condition;
-    private String image_path;
-	
-	private int product_id;
-    public int getProduct_id() {
-		return product_id;
+    private int categoryId;
+    private int productCondition;
+    private Timestamp createdAt;
+    private String imagePath;
+    private boolean isSoldOut;
+    private String categoryName;
+    private String productConditionName;
+
+    
+    
+    public int getProductId() {
+		return productId;
 	}
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
-	public int getMember_id() {
-		return member_id;
+    
+	public String getMemberId() {
+		return memberId;
 	}
-	public void setMember_id(int member_id) {
-		this.member_id = member_id;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	public String getName() {
 		return name;
@@ -41,25 +50,48 @@ public class ProductBean {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getCategory_id() {
-		return category_id;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	public int getProduct_condition() {
-		return product_condition;
+	public int getProductCondition() {
+		return productCondition;
 	}
-	public void setProduct_condition(int product_condition) {
-		this.product_condition = product_condition;
+	public void setProductCondition(int productCondition) {
+		this.productCondition = productCondition;
 	}
-	public String getImage_path() {
-		return image_path;
+	public Timestamp getCreatedAt() {
+	    return createdAt;
 	}
-	public void setImage_path(String image_path) {
-		this.image_path = image_path;
+	public void setCreatedAt(Timestamp createdAt) {
+	    this.createdAt = createdAt;
 	}
-	
-    
+
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public boolean isSoldOut() {
+		return isSoldOut;
+	}
+	public void setSoldOut(boolean isSoldOut) {
+		this.isSoldOut = isSoldOut;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getProductConditionName() {
+		return productConditionName;
+	}
+	public void setProductConditionName(String productConditionName) {
+		this.productConditionName = productConditionName;
+	}
     
 }

@@ -63,7 +63,7 @@ public class UserDAO {
 	    UserBean user = null;
 
 	    Connection con = getConnection();
-	    String sql = "SELECT * FROM users WHERE MEMBER_ID = ? AND PASSWORD = ?";
+	    String sql =  "SELECT * FROM users WHERE MEMBER_ID = ? AND PASSWORD = ? AND is_deleted = 0";
 	    PreparedStatement stmt = con.prepareStatement(sql);
 	    stmt.setString(1, memberId);
 	    stmt.setString(2, password);
@@ -91,7 +91,7 @@ public class UserDAO {
 	public boolean insertUser(UserBean user) throws Exception {
 		Connection con = getConnection();
 		
-		String sql = "INSERT INTO users(MEMBER_ID,PASSWORD,LAST_NAME,FIRST_NAME,ADDRESS,MAIL_ADDRESS) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO users(MEMBER_ID,PASSWORD,LAST_NAME,FIRST_NAME,ADDRESS,MAIL_ADDRESS,is_deleted) VALUES (?,?,?,?,?,?,0)";
 		
 		PreparedStatement stmt = con.prepareStatement(sql);
 		
@@ -111,6 +111,7 @@ public class UserDAO {
 		
 	}
 	
+	//会員情報更新
 	public boolean updateUser(UserBean user) throws Exception {
 	    Connection con = null;
 	    PreparedStatement stmt = null;
@@ -118,7 +119,7 @@ public class UserDAO {
 	    try {
 	        con = getConnection();
 
-	        String sql = "UPDATE users SET LAST_NAME=?, FIRST_NAME=?, ADDRESS=?, MAIL_ADDRESS=? WHERE MEMBER_ID=?";
+	        String sql = "UPDATE users SET LAST_NAME=?, FIRST_NAME=?, ADDRESS=?, MAIL_ADDRESS=? WHERE MEMBER_ID=? AND is_deleted=0";
 
 	        stmt = con.prepareStatement(sql);
 	        
@@ -137,24 +138,63 @@ public class UserDAO {
 	    }
 	}
 
+	//論理削除
 	public boolean deleteUser(String memberId) throws Exception {
-		Connection con = null;
-		PreparedStatement stmt = null;
-		
-		try {
-			con = getConnection();
-			String sql ="DELETE FROM users WHERE MEMBER_ID = ?";
-			
-			stmt = con.prepareStatement(sql);
-			
-			stmt.setString(1, memberId);
-			int result = stmt.executeUpdate();
-			return result > 0;
-		} finally {	
-			if (stmt != null) stmt.close();
-			if (stmt != null) stmt.close();
+	    Connection con = null;
+	    PreparedStatement stmt = null;
+
+	    try {
+	        con = getConnection();
+
+	        String sql = "UPDATE users SET is_deleted = 1 WHERE MEMBER_ID = ?";
+
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, memberId);
+
+	        int result = stmt.executeUpdate();
+	        return result > 0;
+
+	    } finally {
+	        if (stmt != null) stmt.close();
+	        if (con != null) con.close();
 		}
 	}
+	
+	//全ユーザーの情報取得(論理削除されていない)
+	public List<UserBean> getAllUsers() throws Exception {
+	    List<UserBean> users = new ArrayList<>();
+	    Connection con = getConnection();
+
+	    String sql = "SELECT * FROM users WHERE is_deleted = 0";
+	    PreparedStatement st = con.prepareStatement(sql);
+	    ResultSet rs = st.executeQuery();
+
+	    while (rs.next()) {
+	        String memberId = rs.getString("MEMBER_ID");
+	        String password = rs.getString("PASSWORD");
+	        String lastName = rs.getString("LAST_NAME");
+	        String firstName = rs.getString("FIRST_NAME");
+	        String address = rs.getString("ADDRESS");
+	        String mailAddress = rs.getString("MAIL_ADDRESS");
+
+	        UserBean user = new UserBean();
+	        user.setMemberId(memberId);
+	        user.setPassword(password);
+	        user.setLastName(lastName);
+	        user.setFirstName(firstName);
+	        user.setAddress(address);
+	        user.setMailAddress(mailAddress);
+
+	        users.add(user);
+	    }
+
+	    rs.close();
+	    st.close();
+	    con.close();
+
+	    return users;
+	}
+
 	
 
 }
